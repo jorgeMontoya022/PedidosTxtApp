@@ -15,9 +15,6 @@ public class Pedido {
         inicializarDatos();
 
     }
-
-
-
     private void inicializarDatos() {
         Producto producto1 = new ProductoBuilder()
                 .nombre("Pala")
