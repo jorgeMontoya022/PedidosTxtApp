@@ -1,10 +1,8 @@
 package co.edu.uniquindio.pedidos.pedidosapp.viewController;
 
 import java.net.URL;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import java.util.ResourceBundle;
 
 import co.edu.uniquindio.pedidos.pedidosapp.builder.PedidoBuilder;
@@ -21,7 +19,7 @@ import javafx.scene.control.TextField;
 
 public class PedidoViewController {
     PedidoController pedidoController;
-    private List<Producto> listaProductosTemp = new ArrayList<>();
+    private List<Producto> listaProductos = new ArrayList<>();
 
     @FXML
     private ResourceBundle resources;
@@ -50,6 +48,14 @@ public class PedidoViewController {
 
 
     }
+    @FXML
+    void onLimpiarCampos(ActionEvent event) {
+        limpiarCampos();
+
+    }
+
+
+
 
     @FXML
     void onAgregarProducto(ActionEvent event) {
@@ -61,7 +67,7 @@ public class PedidoViewController {
                     .precio(Double.parseDouble(txtValorProducto.getText()))
                     .build();
 
-            listaProductosTemp.add(producto);
+            listaProductos.add(producto);
             mostrarMensaje("Notificación de producto", "Producto agregado", "El producto ha sido añadido a la lista", Alert.AlertType.INFORMATION);
             limpiarCampos();
         } else {
@@ -70,18 +76,17 @@ public class PedidoViewController {
     }
 
 
-
     @FXML
     void onAgregarPedido(ActionEvent event) {
-        if (!listaProductosTemp.isEmpty() && dpFechaProducto.getValue() != null) {
+        if (!listaProductos.isEmpty() && dpFechaProducto.getValue() != null) {
             Pedido pedido = new PedidoBuilder()
                     .fechaPedido(dpFechaProducto.getValue())
-                    .listaProductos(listaProductosTemp) // Usar la lista temporal
+                    .listaProductos(listaProductos)
                     .build();
 
             if (pedidoController.agregarPedido(pedido)) {
                 mostrarMensaje("Notificación del pedido", "Pedido creado", "El pedido ha sido agregado con éxito", Alert.AlertType.INFORMATION);
-                listaProductosTemp.clear(); // Limpiar la lista temporal para un nuevo pedido
+                listaProductos.clear(); // Limpiar la lista para un nuevo pedido
                 limpiarCampos();
             } else {
                 mostrarMensaje("Notificación del pedido", "Pedido no agregado", "El pedido no ha sido agregado con éxito", Alert.AlertType.ERROR);
@@ -92,11 +97,11 @@ public class PedidoViewController {
     }
 
 
-
     private void limpiarCampos() {
         txtValorProducto.setText("");
         txtNombreProducto.setText("");
         txtCodigoProducto.setText("");
+        txtAreaResultado.setText("");
         dpFechaProducto.setValue(null);
     }
 
@@ -117,14 +122,26 @@ public class PedidoViewController {
     }
 
 
-
-
     @FXML
     void onMostrarPedido(ActionEvent event) {
+        List<Pedido> pedidos = pedidoController.mostrarListaPedidos();
+        StringBuilder resultado = new StringBuilder();
 
+        for (Pedido pedido : pedidos) {
+            resultado.append("Fecha: ").append(pedido.getFechaPedido()).append("\n");
+            resultado.append("Total: ").append(pedido.getTotal()).append("\n");
+            resultado.append("Productos:\n");
+
+            for (Producto producto : pedido.getListaProductos()) {
+                resultado.append(" - Código: ").append(producto.getCodigo())
+                        .append(", Nombre: ").append(producto.getNombre())
+                        .append(", Precio: ").append(producto.getPrecio()).append("\n");
+            }
+            resultado.append("-----------------------------\n");
+        }
+
+        txtAreaResultado.setText(resultado.toString());
     }
-
-
 
 
 

@@ -1,8 +1,8 @@
 package co.edu.uniquindio.pedidos.pedidosapp.persistencia;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ArchivoUtil {
     public static void guardarArchivo(String rutaArchivoPedidos, String contenido, boolean flagAnexarContenido) throws IOException {
@@ -13,4 +13,21 @@ public class ArchivoUtil {
         bfw.close();
         fw.close();
     }
+
+    public static ArrayList<String> leerArchivo(String ruta) throws IOException {
+        ArrayList<String> contenido = new ArrayList<>();
+
+        FileReader fr = new FileReader(ruta);
+        BufferedReader bfr = new BufferedReader(fr);
+
+        String linea;
+        while ((linea = bfr.readLine()) != null) {
+            contenido.add(linea);
+        }
+
+        bfr.close();
+        fr.close();
+        return contenido;
+    }
+
 }

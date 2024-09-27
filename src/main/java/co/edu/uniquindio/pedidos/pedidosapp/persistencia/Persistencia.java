@@ -7,6 +7,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 public class Persistencia {
@@ -42,6 +45,40 @@ public class Persistencia {
         textoPedido.append("\n");
 
         ArchivoUtil.guardarArchivo(rutaArchivoPedidos, textoPedido.toString(), true);
+    }
+
+
+    public List<Pedido> cargarPedidos() throws IOException {
+        String rutaArchivoPedidos = obtenerRutaProperties();
+        List<String> contenido = ArchivoUtil.leerArchivo(rutaArchivoPedidos);
+        List<Pedido> listaPedidos = new ArrayList<>();
+
+        for (String linea : contenido) {
+            String[] datos = linea.split(",");
+
+            // Validar que al menos se tenga una fecha y un producto
+            if (datos.length < 3) {
+                System.out.println("Formato incorrecto en la línea: " + linea);
+                continue; // Saltar esta línea si no tiene suficientes datos
+            }
+
+            List<Producto> productos = new ArrayList<>();
+            for (int i = 2; i < datos.length; i += 3) {
+                // Validar que el índice no se salga de los límites del arreglo
+                if (i + 2 >= datos.length) {
+                    System.out.println("Datos de producto incompletos en la línea: " + linea);
+                    continue; // Saltar este producto si no tiene suficientes datos
+                }
+
+                Producto producto = new Producto(datos[i], datos[i + 1], Double.parseDouble(datos[i + 2]));
+                productos.add(producto);
+            }
+
+            Pedido pedido = new Pedido(LocalDate.parse(datos[0]), productos);
+            listaPedidos.add(pedido);
+        }
+
+        return listaPedidos;
     }
 
 

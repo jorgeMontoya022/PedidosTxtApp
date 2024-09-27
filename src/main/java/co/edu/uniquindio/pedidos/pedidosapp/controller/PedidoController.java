@@ -4,6 +4,8 @@ import co.edu.uniquindio.pedidos.pedidosapp.model.Pedido;
 import co.edu.uniquindio.pedidos.pedidosapp.persistencia.Persistencia;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class PedidoController {
 
@@ -22,5 +24,17 @@ public class PedidoController {
             return false;
         }
 
+    }
+
+    public List<Pedido> mostrarListaPedidos() {
+        Persistencia persistencia = new Persistencia();
+        List<Pedido> pedidos = new ArrayList<>();
+
+        try {
+            pedidos = persistencia.cargarPedidos();
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+        return pedidos;
     }
 }
