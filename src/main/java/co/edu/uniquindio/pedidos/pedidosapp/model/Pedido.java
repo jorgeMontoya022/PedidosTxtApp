@@ -23,30 +23,8 @@ public class Pedido {
         calcularTotal();  // Calcula el total automáticamente al inicializar
     }
 
-    // Método para inicializar una lista de pedidos predefinidos
-    public static List<Pedido> crearPedidosPredefinidos() {
-        List<Pedido> pedidos = new ArrayList<>();
-
-        // Crea los productos para el primer pedido
-        List<Producto> productos1 = new ArrayList<>();
-        productos1.add(new ProductoBuilder().nombre("Pala").codigo("1234").precio(1000000).build());
-        productos1.add(new ProductoBuilder().nombre("Taladro").codigo("5678").precio(250000).build());
-        productos1.add(new ProductoBuilder().nombre("Martillo").codigo("9101").precio(75000).build());
-
-        // Crea un primer pedido con los productos1 y lo agrega a la lista de pedidos
-        pedidos.add(new Pedido(LocalDate.of(2024, 9, 21), productos1));
-
-        // Crea los productos para el segundo pedido
-        List<Producto> productos2 = new ArrayList<>();
-        productos2.add(new ProductoBuilder().nombre("Sierra Eléctrica").codigo("1121").precio(500000).build());
-        productos2.add(new ProductoBuilder().nombre("Destornillador").codigo("3141").precio(15000).build());
-
-        // Crea un segundo pedido con los productos2 y lo agrega a la lista de pedidos
-        pedidos.add(new Pedido(LocalDate.of(2024, 9, 22), productos2));
 
 
-        return pedidos;  // Retorna la lista de pedidos predefinidos
-    }
 
     public LocalDate getFechaPedido() {
         return fechaPedido;
