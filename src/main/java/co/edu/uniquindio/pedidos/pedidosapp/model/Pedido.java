@@ -11,69 +11,41 @@ public class Pedido {
     private double total;
     private List<Producto> listaProductos = new ArrayList<>();
 
-    public Pedido(){
-        inicializarDatos();
-
+    public Pedido() {
+        // No llamamos a inicializarDatos() para evitar problemas.
+        // Solo inicializa el pedido vacío.
     }
-    private void inicializarDatos() {
-        Producto producto1 = new ProductoBuilder()
-                .nombre("Pala")
-                .codigo("1234")
-                .precio(1000000)
-                .build();
 
-        Producto producto2 = new ProductoBuilder()
-                .nombre("Taladro")
-                .codigo("5678")
-                .precio(250000)
-                .build();
+    // Constructor para inicializar un pedido con datos quemados (predefinidos)
+    public Pedido(LocalDate fechaPedido, List<Producto> productos) {
+        this.fechaPedido = fechaPedido;
+        this.listaProductos = productos;
+        calcularTotal();  // Calcula el total automáticamente al inicializar
+    }
 
-        Producto producto3 = new ProductoBuilder()
-                .nombre("Martillo")
-                .codigo("9101")
-                .precio(75000)
-                .build();
+    // Método para inicializar una lista de pedidos predefinidos
+    public static List<Pedido> crearPedidosPredefinidos() {
+        List<Pedido> pedidos = new ArrayList<>();
 
-        Producto producto4 = new ProductoBuilder()
-                .nombre("Sierra Eléctrica")
-                .codigo("1121")
-                .precio(500000)
-                .build();
+        // Crea los productos para el primer pedido
+        List<Producto> productos1 = new ArrayList<>();
+        productos1.add(new ProductoBuilder().nombre("Pala").codigo("1234").precio(1000000).build());
+        productos1.add(new ProductoBuilder().nombre("Taladro").codigo("5678").precio(250000).build());
+        productos1.add(new ProductoBuilder().nombre("Martillo").codigo("9101").precio(75000).build());
 
-        Producto producto5 = new ProductoBuilder()
-                .nombre("Destornillador")
-                .codigo("3141")
-                .precio(15000)
-                .build();
+        // Crea un primer pedido con los productos1 y lo agrega a la lista de pedidos
+        pedidos.add(new Pedido(LocalDate.of(2024, 9, 21), productos1));
 
-        Producto producto6 = new ProductoBuilder()
-                .nombre("Llave Inglesa")
-                .codigo("5161")
-                .precio(45000)
-                .build();
+        // Crea los productos para el segundo pedido
+        List<Producto> productos2 = new ArrayList<>();
+        productos2.add(new ProductoBuilder().nombre("Sierra Eléctrica").codigo("1121").precio(500000).build());
+        productos2.add(new ProductoBuilder().nombre("Destornillador").codigo("3141").precio(15000).build());
 
-        Producto producto7 = new ProductoBuilder()
-                .nombre("Alicates")
-                .codigo("7181")
-                .precio(25000)
-                .build();
-
-        Producto producto8 = new ProductoBuilder()
-                .nombre("Cinta Métrica")
-                .codigo("9202")
-                .precio(10000)
-                .build();
-
-        listaProductos.add(producto1);
-        listaProductos.add(producto2);
-        listaProductos.add(producto3);
-        listaProductos.add(producto4);
-        listaProductos.add(producto5);
-        listaProductos.add(producto6);
-        listaProductos.add(producto7);
-        listaProductos.add(producto8);
+        // Crea un segundo pedido con los productos2 y lo agrega a la lista de pedidos
+        pedidos.add(new Pedido(LocalDate.of(2024, 9, 22), productos2));
 
 
+        return pedidos;  // Retorna la lista de pedidos predefinidos
     }
 
     public LocalDate getFechaPedido() {
@@ -98,12 +70,22 @@ public class Pedido {
 
     public void setListaProductos(List<Producto> listaProductos) {
         this.listaProductos = listaProductos;
+        calcularTotal();  // Recalcula el total si la lista cambia
     }
 
-    private void calcularTotal() {
-        total = 0; // Reinicia el total
+    public void calcularTotal() {
+        total = 0;
         for (Producto producto : listaProductos) {
-            total += producto.getPrecio(); // Suma los precios de los productos
+            total += producto.getPrecio();
         }
+    }
+
+    @Override
+    public String toString() {
+        return "Pedido{" +
+                "fechaPedido=" + fechaPedido +
+                ", total=" + total +
+                ", listaProductos=" + listaProductos +
+                '}';
     }
 }
