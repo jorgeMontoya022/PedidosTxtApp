@@ -9,15 +9,17 @@ public class ProductoBuilder implements IBuilder {
     private String nombre;
     private double precio;
 
-    public ProductoBuilder codigo(String codigo){
+    public ProductoBuilder codigo(String codigo) {
         this.codigo = codigo;
         return this;
     }
-    public ProductoBuilder nombre(String nombre){
+
+    public ProductoBuilder nombre(String nombre) {
         this.nombre = nombre;
         return this;
     }
-    public ProductoBuilder precio(double precio){
+
+    public ProductoBuilder precio(double precio) {
         this.precio = precio;
         return this;
     }

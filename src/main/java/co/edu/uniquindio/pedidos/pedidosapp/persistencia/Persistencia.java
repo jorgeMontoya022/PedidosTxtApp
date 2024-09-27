@@ -32,15 +32,15 @@ public class Persistencia {
         String rutaArchivoPedidos = obtenerRutaProperties();
         StringBuilder textoPedido = new StringBuilder();
 
-        textoPedido.append(pedido.getFechaPedido()+ ",");
-        textoPedido.append(pedido.getTotal()+ ",");
-        for(Producto producto: pedido.getListaProductos()){
-            textoPedido.append(producto.getCodigo()+ ",");
-            textoPedido.append(producto.getNombre()+ ",");
-            textoPedido.append(producto.getPrecio()+ ",");
+        textoPedido.append(pedido.getFechaPedido() + ",");
+        textoPedido.append(pedido.getTotal() + ",");
+        for (Producto producto : pedido.getListaProductos()) {
+            textoPedido.append(producto.getCodigo() + ",");
+            textoPedido.append(producto.getNombre() + ",");
+            textoPedido.append(producto.getPrecio() + ",");
         }
         if (textoPedido.length() > 0) {
-            textoPedido.setLength(textoPedido.length()-1);
+            textoPedido.setLength(textoPedido.length() - 1);
         }
         textoPedido.append("\n");
 

@@ -16,10 +16,10 @@ public class PedidoController {
     public boolean agregarPedido(Pedido pedido) {
         Persistencia persistencia = new Persistencia();
 
-        try{
+        try {
             persistencia.guardarPedidos(pedido);
             return true;
-        }catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
             return false;
         }
@@ -32,7 +32,7 @@ public class PedidoController {
 
         try {
             pedidos = persistencia.cargarPedidos();
-        }catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
         return pedidos;

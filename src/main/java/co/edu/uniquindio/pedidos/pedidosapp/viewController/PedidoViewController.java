@@ -48,13 +48,12 @@ public class PedidoViewController {
 
 
     }
+
     @FXML
     void onLimpiarCampos(ActionEvent event) {
         limpiarCampos();
 
     }
-
-
 
 
     @FXML
@@ -142,7 +141,6 @@ public class PedidoViewController {
 
         txtAreaResultado.setText(resultado.toString());
     }
-
 
 
     private void mostrarMensaje(String title, String header, String content, Alert.AlertType alertType) {

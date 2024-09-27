@@ -24,8 +24,6 @@ public class Pedido {
     }
 
 
-
-
     public LocalDate getFechaPedido() {
         return fechaPedido;
     }
