@@ -27,7 +27,6 @@ public class Persistencia {
         return "";
     }
 
-
     public void guardarPedidos(Pedido pedido) throws IOException {
         String rutaArchivoPedidos = obtenerRutaProperties();
         StringBuilder textoPedido = new StringBuilder();
@@ -46,7 +45,6 @@ public class Persistencia {
 
         ArchivoUtil.guardarArchivo(rutaArchivoPedidos, textoPedido.toString(), true);
     }
-
 
     public List<Pedido> cargarPedidos() throws IOException {
         String rutaArchivoPedidos = obtenerRutaProperties();
@@ -75,11 +73,10 @@ public class Persistencia {
             }
 
             Pedido pedido = new Pedido(LocalDate.parse(datos[0]), productos);
+            pedido.setIva(Double.parseDouble(datos[2]));
             listaPedidos.add(pedido);
         }
 
         return listaPedidos;
     }
-
-
 }

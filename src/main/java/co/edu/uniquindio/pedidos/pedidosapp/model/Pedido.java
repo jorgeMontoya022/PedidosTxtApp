@@ -9,7 +9,10 @@ import java.util.List;
 public class Pedido {
     private LocalDate fechaPedido;
     private double total;
+    private double iva;
+    private final double PORCENTAJE_IVA = 0.19;
     private List<Producto> listaProductos = new ArrayList<>();
+
 
     public Pedido() {
         // No llamamos a inicializarDatos() para evitar problemas.
@@ -21,8 +24,17 @@ public class Pedido {
         this.fechaPedido = fechaPedido;
         this.listaProductos = productos;
         calcularTotal();  // Calcula el total automáticamente al inicializar
+        calcularIva();
     }
 
+
+    public double getIva() {
+        return iva;
+    }
+
+    public void setIva(double iva) {
+        this.iva = iva;
+    }
 
     public LocalDate getFechaPedido() {
         return fechaPedido;
@@ -47,6 +59,7 @@ public class Pedido {
     public void setListaProductos(List<Producto> listaProductos) {
         this.listaProductos = listaProductos;
         calcularTotal();  // Recalcula el total si la lista cambia
+
     }
 
     public void calcularTotal() {
@@ -55,6 +68,13 @@ public class Pedido {
             total += producto.getPrecio();
         }
     }
+
+    private void calcularIva() {
+        iva = total * PORCENTAJE_IVA;
+        total+=iva;
+
+    }
+
 
     @Override
     public String toString() {

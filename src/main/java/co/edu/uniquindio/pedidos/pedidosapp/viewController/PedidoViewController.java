@@ -126,21 +126,27 @@ public class PedidoViewController {
         List<Pedido> pedidos = pedidoController.mostrarListaPedidos();
         StringBuilder resultado = new StringBuilder();
 
-        for (Pedido pedido : pedidos) {
-            resultado.append("Fecha: ").append(pedido.getFechaPedido()).append("\n");
-            resultado.append("Total: ").append(pedido.getTotal()).append("\n");
-            resultado.append("Productos:\n");
+        if (pedidos.isEmpty()) {
+            resultado.append("No hay pedidos disponibles.");
+        } else {
+            for (Pedido pedido : pedidos) {
+                resultado.append("Fecha: ").append(pedido.getFechaPedido()).append("\n");
+                resultado.append("Total: ").append(pedido.getTotal()).append("\n");
+                resultado.append("Iva: ").append(pedido.getIva()).append("\n");
+                resultado.append("Productos:\n");
 
-            for (Producto producto : pedido.getListaProductos()) {
-                resultado.append(" - Código: ").append(producto.getCodigo())
-                        .append(", Nombre: ").append(producto.getNombre())
-                        .append(", Precio: ").append(producto.getPrecio()).append("\n");
+                for (Producto producto : pedido.getListaProductos()) {
+                    resultado.append(" - Código: ").append(producto.getCodigo())
+                            .append(", Nombre: ").append(producto.getNombre())
+                            .append(", Precio: ").append(producto.getPrecio()).append("\n");
+                }
+                resultado.append("-----------------------------\n");
             }
-            resultado.append("-----------------------------\n");
         }
 
         txtAreaResultado.setText(resultado.toString());
     }
+
 
 
     private void mostrarMensaje(String title, String header, String content, Alert.AlertType alertType) {
